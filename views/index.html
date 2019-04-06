@@ -1,0 +1,378 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<HTML>
+<HEAD>
+  <TITLE>Calculation of Atoms </TITLE>
+</HEAD>
+<BODY BGCOLOR="#c0c0c0" TEXT="#0F0F0F" LINK="#0000A0" VLINK="#000040">
+<H1>
+  <FONT color="#0000A0">From Atoms to Condensed Matter</FONT>
+</H1>
+The follwoing table shows the first 18 elements.
+<CENTER>
+  <P>
+  <FORM action="" method="" target="">
+  </FORM>
+</CENTER>
+<CENTER>
+  <TABLE BORDER CELLPADDING=2 >
+    <CAPTION align=bottom>
+    </CAPTION>
+    <TR>
+      <TD>row</TD>
+      <TD>s<SUP>1</SUP></TD>
+      <TD>s<SUP>2</SUP></TD>
+      <TD>p<SUP>1</SUP></TD>
+      <TD>p<SUP>2</SUP></TD>
+      <TD>p<SUP>3</SUP></TD>
+      <TD>p<SUP>4</SUP></TD>
+      <TD>p<SUP>5</SUP></TD>
+      <TD>p<SUP>6</SUP></TD>
+      <TD>valence</TD>
+    </TR>
+    <TR>
+      <TD>1.</TD>
+      <TD>H&nbsp;
+	<INPUT TYPE="Radio" onClick="calc_atom('H');"></TD>
+      <TD><FONT color="#008000">He</FONT>
+	<INPUT TYPE="Radio" onClick="calc_atom('He');"></TD>
+      <TD></TD>
+      <TD></TD>
+      <TD></TD>
+      <TD></TD>
+      <TD></TD>
+      <TD></TD>
+      <TH>1s</TH>
+    </TR>
+    <TR>
+      <TD>2.</TD>
+      <TD><FONT color="#004080">Li</FONT>
+	<INPUT TYPE="Radio" onClick="calc_atom('Li');"></TD>
+      <TD><FONT color="#004080">Be</FONT>
+	<INPUT TYPE="Radio" onClick="calc_atom('Be');"></TD>
+      <TD>B&nbsp;
+	<INPUT TYPE="Radio" onClick="calc_atom('B');"></TD>
+      <TD>C&nbsp;
+	<INPUT TYPE="Radio" onClick="calc_atom('C');"></TD>
+      <TD><FONT color="#FF0080">N</FONT>
+	<INPUT TYPE="Radio" onClick="calc_atom('N');"></TD>
+      <TD><FONT color="#FF0080">O</FONT>
+	<INPUT TYPE="Radio" onClick="calc_atom('O');"></TD>
+      <TD><FONT color="#FF0080">F</FONT>
+	<INPUT TYPE="Radio" onClick="calc_atom('F');"></TD>
+      <TD><FONT color="#008000">Ne</FONT>
+	<INPUT TYPE="Radio" onClick="calc_atom('Ne');"></TD>
+      <TH>2s2p</TH>
+    </TR>
+    <TR>
+      <TD>3.</TD>
+      <TD><FONT color="#004080">Na</FONT>
+	<INPUT TYPE="Radio" onClick="calc_atom('Na');"></TD>
+      <TD><FONT color="#004080">Mg</FONT></TD>
+      <TD><FONT color="#004080">Al</FONT></TD>
+      <TD>Si&nbsp;
+	<INPUT TYPE="Radio" onClick="calc_atom('Si');"></TD>
+      <TD>P</TD>
+      <TD><FONT color="#FF0080">S</FONT></TD>
+      <TD><FONT color="#FF0080">Cl</FONT></TD>
+      <TD><FONT color="#008000">Ar</FONT>
+	<INPUT TYPE="Radio" onClick="calc_atom('Ar');"></TD>
+      <TH>3s3p</TH>
+    </TR>
+  </TABLE>
+</CENTER>
+<CENTER>
+</CENTER>
+<P>
+<SCRIPT LANGUAGE="JavaScript">
+<!-- Java-Script zum Testen --
+//
+function calc_atom(Element)
+{
+//
+// Algemeine Definitionen und Initalisierung der Atomdaten
+confirm(" Starting the calculation of the atomic properties");
+var Z = 0.0; var r = 0.0; var r1 = 0.001; var r2 = 10;
+var maxorbit = 6; var iorbit = 0; var dummy;
+var orbit = new Array("1s","2s","2p","3s","3p","3d");
+var besorbit = new Array(21); var zorbit = new Array(21);
+var worbit = new Array(" "," "," "," "," "," ");
+var rhosum = " "; var Elename = " "; var pi =  3.141592654
+var wavfct = " "; var rhowav = " "; var qtotal = 0.0;
+var vnpot = " "; var tkin = " "; var etot = 0.0;
+var ekin = 0.0; var norm = new Array(21); var nqu = 0.0; lqu = 0.0;
+var enpot = 0.0; var norbit = new Array(21); var lorbit = new Array(21);
+var eorbit = new Array(21); var denpot = new Array(21);
+var dekin = new Array(21);  var tztt = " "; var eepot = 0.0;
+var deepot = new Array(21); var vepot = " ";
+//
+// Allgemeine Fenster und String-Definitionen
+var win;
+var txtcbeg = "<H2> <CENTER>"; var txtcend   = "</CENTER> </H2>";
+var txtnbeg = "<H2>"; var txtnend   = "</H2>"; var nxt = "<p>"
+var ascbeg = "<PRE>"; ascend = "</PRE>"
+win = window.open("","Atomdaten","width=600,height=200,resizable=yes");
+win.document.write(ascbeg); var high = "%22"; var line = "<HR>";
+//
+// Bestimmung des Atoms
+if (Element == "H")
+{Elename="Wasserstoff"; Z = 1.0;
+besorbit[0] = 1.0;
+besorbit[1] = 0.0; besorbit[2] = 0.0;
+besorbit[3] = 0.0; besorbit[4] = 0.0; besorbit[5] = 0.0;}
+if (Element == "He")
+{Elename="Helium"; Z = 2.0;
+besorbit[0] = 2.0;}
+if (Element == "Li")
+{Elename="Lithium"; Z = 3.0;
+besorbit[0] = 2.0;
+besorbit[1] = 1.0; besorbit[2] = 0.0;}
+if (Element == "Be")
+{Elename="Beryllium"; Z = 4.0;
+besorbit[0] = 2.0;
+besorbit[1] = 2.0; besorbit[2] = 0.0;}
+if (Element == "B")
+{Elename="Bor"; Z = 5.0;
+besorbit[0] = 2.0;
+besorbit[1] = 2.0; besorbit[2] = 1.0;}
+if (Element == "C")
+{Elename="Kohlenstoff"; Z = 6.0;
+besorbit[0] = 2.0;
+besorbit[1] = 2.0; besorbit[2] = 2.0;}
+if (Element == "N")
+{Elename="Stickstoff"; Z = 7.0;
+besorbit[0] = 2.0;
+besorbit[1] = 2.0; besorbit[2] = 3.0;}
+if (Element == "O")
+{Elename="Sauerstoff"; Z = 8.0;
+besorbit[0] = 2.0;
+besorbit[1] = 2.0; besorbit[2] = 4.0;}
+if (Element == "F")
+{Elename="Flour"; Z = 9.0;
+besorbit[0] = 2.0;
+besorbit[1] = 2.0; besorbit[2] = 5.0;}
+if (Element == "Ne")
+{Elename="Neon"; Z = 10.0;
+besorbit[0] = 2.0;
+besorbit[1] = 2.0; besorbit[2] = 6.0;}
+if (Element == "Na")
+{Elename="Natrium"; Z = 11.0;
+besorbit[0] = 2.0;
+besorbit[1] = 2.0; besorbit[2] = 6.0;
+besorbit[3] = 1.0; besorbit[4] = 0.0; besorbit[5] = 0.0;}
+if (Element == "Si")
+{Elename="Silicium"; Z = 14.0;
+besorbit[0] = 2.0;
+besorbit[1] = 2.0; besorbit[2] = 6.0;
+besorbit[3] = 2.0; besorbit[4] = 2.0; besorbit[5] = 0.0;}
+if (Element == "Ar")
+{Elename="Argon"; Z = 18.0;
+besorbit[0] = 2.0;
+besorbit[1] = 2.0; besorbit[2] = 6.0;
+besorbit[3] = 2.0; besorbit[4] = 6.0; besorbit[5] = 0.0;}
+//
+// Start der Berechnungen
+if (Z != 0.0 )
+{
+//
+// Erste Ausgaben
+win.document.write(txtcbeg + Elename + txtcend);
+win.document.write(nxt + "Kernladung = " + Z );
+win.document.write(line);
+//
+//
+// Berechnung der Abschirmkonstanten
+zorbit[0] = Z - 0.33*(besorbit[0] - 1.00);
+zorbit[1] = Z - 0.85*besorbit[0]
+- 0.33*(besorbit[1] + besorbit[2] - 1.00 );
+zorbit[2] = Z - 1.00*besorbit[0]
+- 0.33*(besorbit[1] + besorbit[2] - 1.00 );
+zorbit[3] = Z - 1.00*besorbit[0]
+- 0.85*(besorbit[1] + besorbit[2] )
+- 0.33*(besorbit[3] + besorbit[4] + besorbit[5] - 1.00 );
+zorbit[4] = zorbit[3];
+zorbit[5] = zorbit[4];
+for (iorbit = 0; iorbit < maxorbit; ++iorbit)
+{ zorbit[iorbit] = form(zorbit[iorbit],2) };
+//
+// Definition der Radialen-Wellenfunktionen
+Zeff=zorbit[0];norbit[0]=1;lorbit[0]=0;
+worbit[0] = "exp(-"+Zeff+"*r)";
+Zeff=zorbit[1];norbit[1]=2;lorbit[1]=0;
+worbit[1] = "(1.0 - 0.5*"+Zeff+"*r)*exp(-0.5*"+Zeff+"*r)";
+Zeff=zorbit[2]; norbit[2]=2;lorbit[2]=1;
+worbit[2] = "r*exp(-0.5*"+Zeff+"*r)";
+Zeff=zorbit[3];norbit[3]=3;lorbit[3]=0;
+worbit[3] = "(1.0 - 0.333*"+Zeff+"*r" +
+"+0.111*r*r*"+Zeff+"*"+Zeff+")*exp(-0.333*"+Zeff+"*r)";
+Zeff=zorbit[4]; norbit[4]=3;lorbit[4]=1;
+worbit[4] = "(1.0 - 0.333*"+Zeff+"*r)*exp(-0.333*"+Zeff+"*r)";
+Zeff = zorbit[5];norbit[5]=3;lorbit[5]=2;
+worbit[5] = "r*r*exp(-0.333*"+Zeff+"*r)";
+//
+// Berechnung der Gesamtdichtefkt.
+for (iorbit = 0; iorbit < maxorbit; ++iorbit)
+{
+if (besorbit[iorbit] > 0.0)
+{
+qtotal = qtotal + besorbit[iorbit];
+Zeff = zorbit[iorbit];nqu=norbit[iorbit];
+lqu=lorbit[iorbit]*(lorbit[iorbit]+1.0);
+wavfct = "(r*"+worbit[iorbit]+")";
+rhowav = wavfct + "*" + wavfct;
+norm[iorbit] = integral(rhowav,r1,r2);
+norm[iorbit] = form(1.0/sqrt(norm[iorbit]),2);
+wavfct = "(r*"+norm[iorbit]+"*"+worbit[iorbit]+")";
+rhowav = wavfct + "*" + wavfct;
+//
+tkin = "-diff2("+unescape(high)+wavfct+unescape(high)+
+",r)"+"*"+wavfct;
+tztt = lqu+"/(r*r)*"+rhowav;
+dekin[iorbit] = integral(tkin,r1,r2)+integral(tztt,r1,r2);
+ekin = ekin + besorbit[iorbit]*dekin[iorbit];
+//
+vnpot = rhowav+"*"+Z+"/r";
+denpot[iorbit] = -2*integral(vnpot,r1,r2);
+enpot = enpot + besorbit[iorbit]*denpot[iorbit];
+//
+vepot = "("+Z+"+"+pi+"*r)/(1+"+pi+"*r)*"+rhowav+"/r";
+deepot[iorbit] = -2*integral(vepot,r1,r2)-denpot[iorbit];
+eepot = eepot + 0.5*besorbit[iorbit]*deepot[iorbit];
+//
+rhosum = rhosum + "+" + besorbit[iorbit] + "*" + rhowav;
+}
+}
+// win.document.write(nxt+"Totales Rho "+rhosum);
+//
+//
+etot = enpot + ekin + eepot;
+win.document.write(nxt+"  Total Energy Terms");
+win.document.write(nxt+"    Etot = " + form(etot,3) + " ryd");
+win.document.write("    Ekin = " + form(ekin,3) + " ryd");
+win.document.write("    Enpot = " + form(enpot,3) + " ryd");
+win.document.write("    Eepot = " + form(eepot,3) + " ryd");
+win.document.write(line);
+//
+for (iorbit = 0; iorbit < maxorbit; ++iorbit)
+{
+if (besorbit[iorbit] > 0.0)
+{
+wavfct = "(r*"+norm[iorbit]+"*"+worbit[iorbit]+")";
+rhowav = wavfct + "*" + wavfct;
+eorbit[iorbit] = dekin[iorbit] +
+denpot[iorbit] + deepot[iorbit];
+win.document.write(nxt + " ekin = " + form(dekin[iorbit],3)
++ " npot = " + form(denpot[iorbit],3)
++ " epot = " + form(deepot[iorbit],3));
+}
+}
+}
+var igo = 0; var besstr = " ";
+win.document.write("<p> <center> <table bgcolor=#00A0FF" +              
+"bordercolor=#00009F border=5>");
+win.document.write("<tr><td> nl </td>" +
+"<td> e<sup>-</sup> </td>" +
+"<td align=center> E<sub>orb</sub> / ryd </td>" +
+"<td align=center><font size=-1> Wavefunction" +
+"</font></td>" +
+"</tr>");
+for (iorbit = maxorbit; iorbit >= 0  ; --iorbit )
+{
+if (besorbit[iorbit] > 0.0)
+{
+besstr = ""
+for (igo = 1; igo <= besorbit[iorbit]; ++igo)
+{ besstr = besstr + "o";}
+win.document.write("<tr><td>" + orbit[iorbit] + "</td>" +
+"<td align=left>" + besstr + "</td>" +
+"<td align=right>" + form(eorbit[iorbit],3) + "</td>" +
+"<td align=center><font size=-2>" + worbit[iorbit] +
+"</font></td>" +
+"</tr>");
+
+}
+}
+win.document.write("</table> </center> </p>");
+//
+//
+if (Z == 0.0) {win.document.write(nxt + "Atom nicht bekannt");}
+//
+win.document.write(line);
+win.document.write(nxt + " Ende der Berechnung" + ascend);
+win.document.close();
+//
+}
+//
+// ### Selbstdefinierte Mathematische Funktionen
+//
+// Power einer Zahl
+function power(x,z)
+{ var x; var z; var y; y = Math.pow(x,z);return y;}
+//
+function exp(x)
+{ var x; var y; y = Math.exp(x); return y;}
+//
+function log(x)
+{ var x; var y; y = Math.log(x); return y;}
+//
+function sqrt(x)
+{ var x; var y; y = Math.sqrt(x); return y;}
+//
+function integral(fofr,r1,r2)
+{
+var fofr; var r1; var r2; var imax = 883;
+var i = 1; var dr = (r2 - r1) / imax; var r = r1;
+var sum = 0.0; var fofr1 = eval(fofr);
+while (i < imax)
+{
+r = r + dr; fofr2 = eval(fofr);
+sum = sum + fofr1 + fofr2;
+fofr1 = fofr2;
+i = i + 1;
+}
+sum = 0.5*sum*dr
+return sum;
+}
+//
+function diff(fofr,r)
+{
+var fofr; var r; var dr = 1e-5;
+r = r - dr;
+var fofrm = eval(fofr);
+r = r + dr + dr;
+var fofrp = eval(fofr);
+dfdr = 0.5 * ( fofrp - fofrm ) / dr;
+return dfdr;
+}
+//
+function diff2(fofr,r)
+{
+var fofr; var r; var dr = 1e-5;
+r = r - dr;
+var fofrm = eval(fofr);
+r = r + dr;
+var fofr0 = eval(fofr);
+r = r + dr;
+var fofrp = eval(fofr);
+dfdr = ( fofrp + fofrm - 2*fofr0) / (dr*dr);
+return dfdr;
+}
+//
+function form(x,z)
+{
+var x; var z; var y;
+x = Math.round(x*power(10,z));
+y = x / power(10,z);
+return y;
+}
+//
+//
+// #### Ende der Mathematischen Funktionen
+//
+//--> </SCRIPT>
+<P>
+To calculate the energy of an atom push the button close to the desired atom...
+If you like more information how the calculation works
+<A href="Chem_Appendix.html">click here</A>.
+
+<P>
+</BODY></HTML>
